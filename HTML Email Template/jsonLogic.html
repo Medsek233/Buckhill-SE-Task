@@ -6,17 +6,75 @@
     <title>JsonLogic</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link  rel="stylesheet" href="css/index.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/json-logic-js@2.0.2/logic.min.js"></script>
+    <script id="json-logic" type="text/x-handlebars-template">
+        <div class="container">
+            {{#if isRuleAPage}}
+                <p>Rule a) There is a due amount AND the purchase was made after January 1st, 2021, AND the shipping country
+                    is whether Croatia or Italy.</p>
+                <p style="font-weight: bold">Data:</p>
+                <p>Due amount: {{orderData.amount}}</p>
+                <p>Order status: {{orderData.order_status}}</p>
+                <p>Purchase date: {{orderData.purchaseDate}}</p>
+                <p>Payment type: {{orderData.payment_type}}</p>
+                <p>Shipping address: {{orderData.shippingAddress}}</p>
+                <p>Number of purchased items: {{orderData.number_of_purchased_items}}</p>
+                <p style="font-weight: bold">Result:</p>
+                {{#if isRuleASatisfied}}
+                    <p>Can Send Email</p>
+                {{else}}
+                    <p>Cannot Send Email</p>
+                {{/if}}
+            {{else if isRuleBPage}}
+                <p>Rule b) Same logic as “a)” but using some different variable(s) from the purchase data.</p>
+                <ul style=" list-style-type: square;">
+                    <li> The number of purchased items is greater than 5.</li>
+                    <li>The purchase amount is greater than 500.</li>
+                    <li>The payment type is either 'credit_card' or 'bank_transfer'."</li>
+                </ul>
+                <p style="font-weight: bold">Data:</p>
+                <p>Due amount: {{orderData.amount}}</p>
+                <p>Order status: {{orderData.order_status}}</p>
+                <p>Purchase date: {{orderData.purchaseDate}}</p>
+                <p>Payment type: {{orderData.payment_type}}</p>
+                <p>Shipping address: {{orderData.shippingAddress}}</p>
+                <p>Number of purchased items: {{orderData.number_of_purchased_items}}</p>
+                <p style="font-weight: bold">Result:</p>
+                {{#if isRuleBSatisfied}}
+                    <p>Can Send Email</p>
+                {{else}}
+                    <p>Cannot Send Email</p>
+                {{/if}}
+            {{else}}
+                <p>Rule c) Create a rule to send internal emails based on 4 custom conditions (for you to choose) where at
+                    least 2 of 4 are TRUE.</p>
+                <ul style=" list-style-type: square;">
+                    <li>The order status is 'paid'.</li>
+                    <li>The purchase amount is at least 1000.</li>
+                    <li>The is_marketing flag is set to '1'.</li>
+                    <li>The payment type is 'credit_card'.</li>
+                </ul>
+                <p style="font-weight: bold">Data:</p>
+                <p>Due amount: {{orderData.amount}}</p>
+                <p>Order status: {{orderData.order_status}}</p>
+                <p>Purchase date: {{orderData.purchaseDate}}</p>
+                <p>Payment type: {{orderData.payment_type}}</p>
+                <p>Shipping address: {{orderData.shippingAddress}}</p>
+                <p>Is Marketing:{{orderData.is_marketing}}</p>
+                <p>Number of purchased items: {{orderData.number_of_purchased_items}}</p>
+                <p style="font-weight: bold">Result:</p>
+                {{#if isRuleCSatisfied}}
+                    <p>Can Send Email</p>
+                {{else}}
+                    <p>Cannot Send Email</p>
+                {{/if}}
+            {{/if}}
+        </div>
+    </script>
 </head>
 <body>
-<script id="json-logic" type="text/x-handlebars-template">
-<h1>{{#if isResultA}}
-   Can we send email: {{resultA}}
-{{else if isResultB}}
-    Can we send email:{{resultB}}
-{{/if}}
-</script>
 </body>
 <script type="module" src="js/jsonLogicRules.js"></script>
 </html>
