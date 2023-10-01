@@ -19,4 +19,3 @@ export async function fetchOrder(accessToken,uuid) {
         throw error;
     }
 }
-//write logic to fetch dingle order from api and map it to handlebars
