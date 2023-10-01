@@ -15,8 +15,3 @@ select `o`.`user_id`    AS `user_id`,
 from (((`petshop`.`orders` `o` join `petshop`.`users` `u` on ((`o`.`user_id` = `u`.`id`))) join `petshop`.`payments` `p`
        on ((`o`.`payment_id` = `p`.`id`))) join `petshop`.`orders_status` `os` on ((`o`.`order_status_id` = `os`.`id`)))
 where (`o`.`created_at` >= (curdate() - interval 6 day))
-
-
-/*The where (`o`.`created_at` >= (curdate() - interval 6 day)) will show the orders
- from the last 7 days (including today) from midnight to midnight. In order to include the datetime we should use
-  where (`o`.`created_at` >= (now() - interval 6 day))*/
