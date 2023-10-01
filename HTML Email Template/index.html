@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Orders</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link  rel="stylesheet" href="css/index.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+<body>
+<script id="fetch-orders" type="text/x-handlebars-template">
+    <div class="container">
+        <table>
+            <tr>
+                <th>Order UUID</th>
+                <th>Order Status</th>
+            </tr>
+           {{#each items}}
+            <tr>
+                <td><a href="fetchOrder.show.html?uuid={{purchase_uuid}}">{{purchase_uuid}}</a></td>
+                <td>{{status}}</td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+</script>
+</body>
+<script type="module" src="js/orders.js"></script>
+
+</html>
