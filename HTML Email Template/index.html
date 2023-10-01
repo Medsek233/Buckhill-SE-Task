@@ -14,26 +14,35 @@
     <div class="container">
         <table>
             <tr>
-                <th>Order UUID</th>
-                <th>Order Status</th>
-                <th>Json Rule</th>
+                <th rowspan="2">Order UUID</th>
+                <th rowspan="2">Order Status</th>
+                <th colspan="3" style="text-align: center">JsonLogic: Should Email Be Sent?</th>
+                <tr>
+                    <th>Rule A</th>
+                    <th>Rule B</th>
+                    <th>Rule C</th>
+                </tr>
             </tr>
+            <tbody>
             {{#each items}}
                 <tr>
                     <td rowspan="3"><a href="fetchOrder.show.html?uuid={{purchase_uuid}}">{{purchase_uuid}}</a></td>
                     <td rowspan="3" style="font-weight: bold">{{status}}</td>
                     <td><a href="jsonLogic.html?rule=a&uuid={{purchase_uuid}}">Apply Rule A</a></td>
-                </tr>
-                <tr>
                     <td><a href="jsonLogic.html?rule=b&uuid={{purchase_uuid}}">Apply Rule B</a></td>
+                    <td><a href="jsonLogic.html?rule=c&uuid={{purchase_uuid}}">Apply Rule C</a></td>
                 </tr>
-                <tr>
-                </tr>
+                <tr></tr>
+                <tr></tr>
             {{/each}}
+            </tbody>
         </table>
+
+
     </div>
 </script>
 </body>
 <script type="module" src="js/orders.js"></script>
+
 
 </html>

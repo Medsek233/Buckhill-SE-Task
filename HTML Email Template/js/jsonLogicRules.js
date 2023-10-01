@@ -43,13 +43,30 @@ document.addEventListener("DOMContentLoaded", async function () {
         const jsonLogicRuleB = {
             "and": [
                 {
-                    "==": [{"var": "order_status"}, "paid"]
+                    ">": [{"var": "number_of_purchased_items"}, "5"]
                 },
                 {
                     ">": [{"var": "amount"}, "500"]
                 },
                 {
-                    "==": [{"var": "payment_type"}, "credit_card"]
+                    "in": [{"var": "payment_type"}, ["credit_card", "bank_transfer"]]
+                }
+            ]
+        }
+
+        const jsonLogicRuleC = {
+            "and": [
+                {
+                    "==": [{"var": "order_status"}, "paid"]
+                },
+                {
+                    "min": [{"var": "amount"}, "1000"]
+                },
+                {
+                    "==": [{"var": "is_marketing"}, "1"]
+                },
+                {
+                    "==": [{"var": "payment_type"}, ["credit_card"]]
                 }
             ]
         }
@@ -62,20 +79,39 @@ document.addEventListener("DOMContentLoaded", async function () {
         };
         // Data object B
         const dataB = {
-            order_status: fetchedOrder.order_status[0].title,
+            number_of_purchased_items: fetchedOrder.products.length,
             amount: fetchedOrder.amount,
             payment_type: fetchedOrder.payment?.type || 'not_provided'
         };
+        // Data object C
+        const dataC = {
+            order_status: fetchedOrder.order_status[0].title,
+            amount: fetchedOrder.amount,
+            payment_type: fetchedOrder.payment?.type || 'not_provided',
+            is_marketing: fetchedOrder.user.is_marketing,
+        }
 
-
+         //Apply the rules
         const isRuleASatisfied = jsonLogic.apply(jsonLogicRuleA, dataA);
         const isRuleBSatisfied = jsonLogic.apply(jsonLogicRuleB, dataB);
+        const isRuleCSatisfied = jsonLogic.apply(jsonLogicRuleC, dataC);
 
         const apiDataForTemplate = {
-            resultA: isRuleASatisfied,
-            resultB: isRuleBSatisfied,
-            isResultA:rule==='a',
-            isResultB:rule==='b'
+            orderData:{
+              order_status: fetchedOrder.order_status[0].title,
+                purchaseDate: fetchedOrder.created_at,
+                shippingAddress: fetchedOrder.address.shipping,
+                number_of_purchased_items: fetchedOrder.products.length,
+                amount: fetchedOrder.amount,
+                payment_type: fetchedOrder.payment?.type || 'not_provided',
+                is_marketing: fetchedOrder.user.is_marketing,
+            },
+             isRuleASatisfied,
+            isRuleBSatisfied,
+            isRuleCSatisfied,
+            isRuleAPage:rule==='a',
+            isRuleBPage:rule==='b',
+            isRuleCPage:rule==='c',
         }
         const renderedHtml = renderTemplate('#json-logic', apiDataForTemplate);
         document.body.innerHTML = renderedHtml;
