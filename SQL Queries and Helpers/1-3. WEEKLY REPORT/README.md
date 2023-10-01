@@ -7,7 +7,8 @@ In this task, I have created a sql procedure to create the view since dynamic al
 
 
 I wanted to introduce you to the weekly_order_report view and the associated procedure [CreateOrUpdateWeeklyOrderReport](https://github.com/Medsek233/Buckhill-SE-Task/blob/main/SQL%20Queries%20and%20Helpers/1-3.%20WEEKLY%20REPORT/CreateOrUpdateWeeklyOrderReport.sql)
-## weekly_order_report View:  that manages it. 
+## weekly_order_report View:
+
    Purpose: Provides a weekly report of our orders.
 
    How it Works:It groups our order data from the past 7 days into batches of 6 based on the order’s ID.
