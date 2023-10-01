@@ -1,5 +1,5 @@
 import {authenticateAdmin} from './API/auth.js';
-import {fetchOrders} from './API/fetchOrders.js';
+import {fetchOrder} from './API/fetchOrder.js';
 import {renderTemplate} from './handlebarsTemplateCompile.js';
 import {formatISODate} from "./dateUtils.js";
 
@@ -10,40 +10,33 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Authenticate admin and get the access token
         const accessToken = await authenticateAdmin(email, password);
-        // 1. Fetch orders
-        // 2. return fetched order to handlebars template
-        // 3. display list of orders using ul and li and <a> tags pointing to email template exemple /email-template.html?order_uuid=123456789
-        // 4. create email-template.html
-        // 5. create email-template.js and get order uuid from url, then fetch order by uuid and display it in email-template.html and make sure to display the order uuid in the email template and map it to handlebars
-        //const urlParams = new URLSearchParams(window.location.search);
-        // const order_uuid = urlParams.get('order_uuid');
-        // console.log(order_uuid);
-        //6.get all order statuses
+        //get order uuid from url
+        const urlParams = new URLSearchParams(window.location.search);
+        const order_uuid = urlParams.get('uuid');
 
+        // Fetch order
+        const apiData = await fetchOrder(accessToken,order_uuid);
 
-
-        // Fetch orders
-        const apiData = await fetchOrders(accessToken);
-
-        // Filter pending payment orders
-        const pendingPaymentOrders = apiData.data.filter(item => item.order_status[0].title === 'pending payment'|| item.order_status[0].title === 'shipped');
-        const isoDate = pendingPaymentOrders[0].created_at;
+        // Retrieve order data from the API response
+        const fetchedOrder = apiData.data;
+        const isoDate = fetchedOrder.created_at;
         const formattedDate = formatISODate(isoDate);
-       const amountPaid = 0;
+        // Check if the API provides the amount_paid property
+        const amountPaid = fetchedOrder.amount_paid ? fetchedOrder.amount_paid : 0;
         // Prepare data for Handlebars template
         const apiDataForTemplate = {
-            user_first_name: pendingPaymentOrders[0].user.first_name,
-            user_last_name: pendingPaymentOrders[0].user.last_name,
-            purchase_id: pendingPaymentOrders[0].uuid,
-            items: pendingPaymentOrders[0].products.map(item => ({
+            user_first_name: fetchedOrder.user.first_name,
+            user_last_name: fetchedOrder.user.last_name,
+            purchase_id: fetchedOrder.uuid,
+            items: fetchedOrder.products.map(item => ({
                 name: item.product,
                 quantity: item.quantity,
                 price: item.price
             })),
             purchaseDate: formattedDate,
-            total: pendingPaymentOrders[0].amount,
+            total: fetchedOrder.amount,
             amountPaid: amountPaid,
-            amountDue: (pendingPaymentOrders[0].amount + pendingPaymentOrders[0].delivery_fee - amountPaid).toFixed(2),
+            amountDue: (fetchedOrder.amount + fetchedOrder.delivery_fee - amountPaid).toFixed(2),
         };
 
         // Render the template and replace the content of the container
