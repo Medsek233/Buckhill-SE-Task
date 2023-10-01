@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         const apiDataForTemplate = {
             user_first_name: fetchedOrder.user.first_name,
             user_last_name: fetchedOrder.user.last_name,
+            user_middle_name: fetchedOrder.user.middle_name ? fetchedOrder.user.middle_name : '',
             purchase_id: fetchedOrder.uuid,
+            status: fetchedOrder.order_status[0].title,
             items: fetchedOrder.products.map(item => ({
                 name: item.product,
                 quantity: item.quantity,
@@ -37,6 +39,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             total: fetchedOrder.amount,
             amountPaid: amountPaid,
             amountDue: (fetchedOrder.amount + fetchedOrder.delivery_fee - amountPaid).toFixed(2),
+            isPaid: fetchedOrder.order_status[0].title === 'paid',
+            isCanceled: fetchedOrder.order_status[0].title === 'canceled',
+            isShipped: fetchedOrder.order_status[0].title === 'shipped',
+            isPendingPayment: fetchedOrder.order_status[0].title === 'pending payment',
+            isOpen: fetchedOrder.order_status[0].title === 'open',
         };
 
         // Render the template and replace the content of the container

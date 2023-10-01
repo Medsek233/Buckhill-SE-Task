@@ -16,9 +16,22 @@
             <img src="img/header_img.png" alt="Company Logo">
         </div>
         <div class="paragraph">
-            <p>Dear <span style="font-weight: bold"> {{user_last_name}} {{user_first_name}}</span>,
-                We are contacting you because there is an amount due on your purchase
-                <span style="font-weight: bold;font-style: italic">{{purchase_id}}</span>:</p>
+            <p>Dear <span style="font-weight: bold"> {{user_last_name}} {{user_first_name}} {{user_middle_name}}</span>,
+                We are contacting you
+                {{#if isPendingPayment}}
+                    because there is an amount due on your purchase
+                {{else if isCanceled}}
+                    because the following purchase is <span style="font-weight: bold;font-style: italic">canceled</span>.
+                {{else if isShipped}}
+                    because the following purchase is <span style="font-weight: bold;font-style: italic">shipped </span>
+                    and there is an amount due.
+                {{else if isOpen}}
+                    because the following purchase is open and not yet been completed</span>.
+                {{else}}
+                    to inform you about the following purchase is duly <span
+                        style="font-weight: bold;font-style: italic">paid</span>.
+                {{/if}}
+                Purchase reference: <span style="font-weight: bold;font-style: italic">{{purchase_id}}</span>:</p>
         </div>
         <table>
             <thead style=" background-color: #0B1C4A !important;-webkit-print-color-adjust: exact;;  color: white;">
@@ -51,21 +64,43 @@
                 <td>Total Amount:</td>
                 <td>{{total}} kn</td>
             </tr>
-            <tr>
-                <td>Amount Paid:</td>
-                <td>{{amount}} kn</td>
-            </tr>
+            {{#unless isCanceled}}
+                <tr>
+                    <td>Amount Paid:</td>
+                    <td>{{#if isPaid}}
+                        {{total}}
+                    {{else}}
+                        {{amountPaid}}
+                    {{/if}} kn
+                    </td>
+                </tr>
+            {{/unless}}
             </tbody>
         </table>
-        <div style=" text-align: left;line-height: 2;">
-            <p>According to our records, the amount due is <span style="font-weight: bold">{{amountDue}}</span> Kn. Please,
-                click on the next
-                button to pay this difference:</p>
-        </div>
-        <div style="text-align: center">
-            <a href="https://pet-shop.buckhill.com.hr/checkout" class="checkout-button"
-               style="background-color: #0B1C4A !important;-webkit-print-color-adjust: exact;color: white;">Pay Now</a>
-        </div>
+        {{#if isCanceled}}
+            <div style=" text-align: left;line-height: 2;">
+                <div style=" text-align: left;line-height: 2;">
+                    <p>This order is canceled and no further action is required.</p>
+                </div>
+            </div>
+        {{/if}}
+        {{#unless isPaid}}
+            {{#unless isCanceled}}
+                <div style=" text-align: left;line-height: 2;">
+                    <p>According to our records, the amount due is <span style="font-weight: bold">{{amountDue}}</span>
+                        Kn.
+                        Please,
+                        click on the next
+                        button to pay this difference:</p>
+                </div>
+                <div style="text-align: center">
+                    <a href="https://pet-shop.buckhill.com.hr/checkout" class="checkout-button"
+                       style="background-color: #0B1C4A !important;-webkit-print-color-adjust: exact;color: white;">Pay
+                        Now</a>
+                </div>
+            {{/unless}}
+        {{/unless}}
+
         <div class="footer">
             <p>If you have any other concerns, please contact our technical support team.</p>
             <p>Kind regards,</p>
