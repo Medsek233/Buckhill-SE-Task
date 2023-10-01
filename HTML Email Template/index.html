@@ -16,12 +16,19 @@
             <tr>
                 <th>Order UUID</th>
                 <th>Order Status</th>
+                <th>Json Rule</th>
             </tr>
-           {{#each items}}
-            <tr>
-                <td><a href="fetchOrder.show.html?uuid={{purchase_uuid}}">{{purchase_uuid}}</a></td>
-                <td>{{status}}</td>
-            </tr>
+            {{#each items}}
+                <tr>
+                    <td rowspan="3"><a href="fetchOrder.show.html?uuid={{purchase_uuid}}">{{purchase_uuid}}</a></td>
+                    <td rowspan="3" style="font-weight: bold">{{status}}</td>
+                    <td><a href="jsonLogic.html?rule=a&uuid={{purchase_uuid}}">Apply Rule A</a></td>
+                </tr>
+                <tr>
+                    <td><a href="jsonLogic.html?rule=b&uuid={{purchase_uuid}}">Apply Rule B</a></td>
+                </tr>
+                <tr>
+                </tr>
             {{/each}}
         </table>
     </div>

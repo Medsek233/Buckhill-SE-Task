@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         // Fetch order
         const apiData = await fetchOrder(accessToken,order_uuid);
 
-        // Retrieve order data from the API response
+        // retrieve the order based on uuid from the api
         const fetchedOrder = apiData.data;
         const isoDate = fetchedOrder.created_at;
         const formattedDate = formatISODate(isoDate);
