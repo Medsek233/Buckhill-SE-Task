@@ -3,7 +3,7 @@
 
 To display the weely report view, you should open a database client, create and seed the databases using [PETSHOP DATA](https://github.com/Medsek233/Buckhill-SE-Task/blob/main/SQL%20Queries%20and%20Helpers/1-2.%20WEEKLY%20ORDERS/ENV/db_data.sql)
 
-In this task, I have created a sql procedure to create the view since aliases in the view are not allowed. 
+In this task, I have created a sql procedure to create the view since dynamic aliases in the view are not allowed. 
 
 
 I wanted to introduce you to the weekly_order_report view and the associated procedure [CreateOrUpdateWeeklyOrderReport](https://github.com/Medsek233/Buckhill-SE-Task/blob/main/SQL%20Queries%20and%20Helpers/1-3.%20WEEKLY%20REPORT/CreateOrUpdateWeeklyOrderReport.sql)
