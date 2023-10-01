@@ -1,7 +1,6 @@
 import {authenticateAdmin} from './API/auth.js';
 import {fetchOrders} from './API/fetchOrders.js';
 import {renderTemplate} from './handlebarsTemplateCompile.js';
-import {formatISODate} from "./dateUtils.js";
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
