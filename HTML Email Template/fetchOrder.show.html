@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>EmailTemplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/email.css">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+<script id="email-template" type="text/x-handlebars-template">
+    <div class="container">
+        <div class="logo">
+            <img src="img/header_img.png" alt="Company Logo">
+        </div>
+        <div class="paragraph">
+            <p>Dear <span style="font-weight: bold"> {{user_last_name}} {{user_first_name}} {{user_middle_name}}</span>,
+                We are contacting you
+                {{#if isPendingPayment}}
+                    because there is an amount due on your purchase
+                {{else if isCanceled}}
+                    because the following purchase is <span style="font-weight: bold;font-style: italic">canceled</span>.
+                {{else if isShipped}}
+                    because the following purchase is <span style="font-weight: bold;font-style: italic">shipped </span>
+                    and there is an amount due.
+                {{else if isOpen}}
+                    because the following purchase is open and not yet been completed</span>.
+                {{else}}
+                    to inform you about the following purchase is duly <span
+                        style="font-weight: bold;font-style: italic">paid</span>.
+                {{/if}}
+                Purchase reference: <span style="font-weight: bold;font-style: italic">{{purchase_id}}</span>:</p>
+        </div>
+        <table>
+            <thead style=" background-color: #0B1C4A !important;-webkit-print-color-adjust: exact;;  color: white;">
+            <tr>
+                <th colspan="3" style="text-align: center">Purchase Summary</th>
+            </tr>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each items}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{quantity}}</td>
+                    <td>{{price}}kn</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <table>
+            <tbody style="font-weight: bold">
+            <tr>
+                <td>Date of Purchase:</td>
+                <td>{{purchaseDate}}</td>
+            </tr>
+            <tr>
+                <td>Total Amount:</td>
+                <td>{{total}} kn</td>
+            </tr>
+            {{#unless isCanceled}}
+                <tr>
+                    <td>Amount Paid:</td>
+                    <td>{{#if isPaid}}
+                        {{total}}
+                    {{else}}
+                        {{amountPaid}}
+                    {{/if}} kn
+                    </td>
+                </tr>
+            {{/unless}}
+            </tbody>
+        </table>
+        {{#if isCanceled}}
+            <div style=" text-align: left;line-height: 2;">
+                <div style=" text-align: left;line-height: 2;">
+                    <p>This order is canceled and no further action is required.</p>
+                </div>
+            </div>
+        {{/if}}
+        {{#unless isPaid}}
+            {{#unless isCanceled}}
+                <div style=" text-align: left;line-height: 2;">
+                    <p>According to our records, the amount due is <span style="font-weight: bold">{{amountDue}}</span>
+                        Kn.
+                        Please,
+                        click on the next
+                        button to pay this difference:</p>
+                </div>
+                <div style="text-align: center">
+                    <a href="https://pet-shop.buckhill.com.hr/checkout" class="checkout-button"
+                       style="background-color: #0B1C4A !important;-webkit-print-color-adjust: exact;color: white;">Pay
+                        Now</a>
+                </div>
+            {{/unless}}
+        {{/unless}}
+
+        <div class="footer">
+            <p>If you have any other concerns, please contact our technical support team.</p>
+            <p>Kind regards,</p>
+            <p>Petson Team</p>
+        </div>
+
+    </div>
+    </body>
+</script>
+<script type="module" src="js/emailTemplate.js"></script>
+
+

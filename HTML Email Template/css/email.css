@@ -1,0 +1,49 @@
+body {
+    font-family: 'Calibri', sans-serif;
+    font-size: 11pt;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.logo {
+    text-align: center;
+}
+.logo img {
+    max-width: 100%;
+    height: auto;
+}
+.paragraph {
+    margin: 20px 0;
+    line-height: 2;
+    text-align: left;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+.checkout-button {
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 200px;
+}
+.footer {
+    text-align: left;
+    line-height: 2;
+    margin-top: 20px;
+}
