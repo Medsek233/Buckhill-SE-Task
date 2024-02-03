@@ -1,5 +1,7 @@
+import { email, password } from "./adminCredentials";
+
 // auth.js
-export async function authenticateAdmin(email, password) {
+export async function authenticateAdmin() {
     const authEndpoint = 'http://pet-shop.buckhill.com.hr/api/v1/admin/login';
 
     const credentials = {

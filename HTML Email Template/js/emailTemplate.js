@@ -1,21 +1,20 @@
-import {authenticateAdmin} from './API/auth.js';
-import {fetchOrder} from './API/fetchOrder.js';
-import {renderTemplate} from './handlebarsTemplateCompile.js';
-import {formatISODate} from "./dateUtils.js";
+import { authenticateAdmin } from './API/auth.js';
+import { fetchOrder } from './API/fetchOrder.js';
+import { renderTemplate } from './handlebarsTemplateCompile.js';
+import { formatISODate } from "./dateUtils.js";
+import StatusEnum from './Enums/statusEnum.js';
+import { email, password } from './API/adminCredentials.js';
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async function() {
     try {
-        const email = 'admin@buckhill.co.uk';
-        const password = 'admin';
-
         // Authenticate admin and get the access token
-        const accessToken = await authenticateAdmin(email, password);
+        const accessToken = await authenticateAdmin();
         //get order uuid from url
         const urlParams = new URLSearchParams(window.location.search);
         const order_uuid = urlParams.get('uuid');
 
         // Fetch order
-        const apiData = await fetchOrder(accessToken,order_uuid);
+        const apiData = await fetchOrder(accessToken, order_uuid);
 
         // retrieve the order based on uuid from the api
         const fetchedOrder = apiData.data;
@@ -39,11 +38,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             total: fetchedOrder.amount,
             amountPaid: amountPaid,
             amountDue: (fetchedOrder.amount + fetchedOrder.delivery_fee - amountPaid).toFixed(2),
-            isPaid: fetchedOrder.order_status[0].title === 'paid',
-            isCanceled: fetchedOrder.order_status[0].title === 'canceled',
-            isShipped: fetchedOrder.order_status[0].title === 'shipped',
-            isPendingPayment: fetchedOrder.order_status[0].title === 'pending payment',
-            isOpen: fetchedOrder.order_status[0].title === 'open',
+            isPaid: fetchedOrder.order_status[0].title === StatusEnum.PAID,
+            isCanceled: fetchedOrder.order_status[0].title === StatusEnum.CANCELLED,
+            isShipped: fetchedOrder.order_status[0].title === StatusEnum.SHIPPED,
+            isPendingPayment: fetchedOrder.order_status[0].title === StatusEnum.PENDING_PAYMENT,
+            isOpen: fetchedOrder.order_status[0].title === StatusEnum.OPEN
         };
 
         // Render the template and replace the content of the container

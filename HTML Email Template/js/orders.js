@@ -1,17 +1,15 @@
-import {authenticateAdmin} from './API/auth.js';
-import {fetchOrders} from './API/fetchOrders.js';
-import {renderTemplate} from './handlebarsTemplateCompile.js';
+import { authenticateAdmin } from './API/auth.js';
+import { fetchOrders } from './API/fetchOrders.js';
+import { renderTemplate } from './handlebarsTemplateCompile.js';
+import { email, password } from './API/adminCredentials.js';
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async function() {
     try {
-        const email = 'admin@buckhill.co.uk';
-        const password = 'admin';
-
         // Authenticate admin and get the access token
-        const accessToken = await authenticateAdmin(email, password);
+        const accessToken = await authenticateAdmin();
 
         // Fetch orders
-        const apiData = await fetchOrders(accessToken,1,10);
+        const apiData = await fetchOrders(accessToken, 1, 10);
         // retrieve all 10 orders from the api
         const purchaseOrders = apiData.data;
         // Prepare data for Handlebars template
