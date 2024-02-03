@@ -3,7 +3,6 @@ import { fetchOrder } from './API/fetchOrder.js';
 import { renderTemplate } from './handlebarsTemplateCompile.js';
 import { formatISODate } from "./dateUtils.js";
 import StatusEnum from './Enums/statusEnum.js';
-import { email, password } from './API/adminCredentials.js';
 
 document.addEventListener("DOMContentLoaded", async function() {
     try {

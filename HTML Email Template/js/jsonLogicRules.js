@@ -1,7 +1,6 @@
 import { authenticateAdmin } from './API/auth.js';
 import { renderTemplate } from "./handlebarsTemplateCompile.js";
 import { fetchOrder } from "./API/fetchOrder.js";
-import { email, password } from "./API/adminCredentials.js";
 
 document.addEventListener("DOMContentLoaded", async function() {
     try {
