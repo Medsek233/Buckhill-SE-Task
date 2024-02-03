@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         const dataC = {
             order_status: fetchedOrder.order_status[0].title,
             amount: fetchedOrder.amount,
-            payment_type: fetchedOrder.payment ? .type || 'not_provided',
+            payment_type: fetchedOrder.payment ? .type ? ? 'not_provided',
             is_marketing: fetchedOrder.user.is_marketing,
         }
 
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 shippingAddress: fetchedOrder.address.shipping,
                 number_of_purchased_items: fetchedOrder.products.length,
                 amount: fetchedOrder.amount,
-                payment_type: fetchedOrder.payment ? .type || 'not_provided',
+                payment_type: fetchedOrder.payment ? .type ? ? 'not_provided',
                 is_marketing: fetchedOrder.user.is_marketing,
             },
             isRuleASatisfied,
